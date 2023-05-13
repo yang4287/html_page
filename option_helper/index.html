@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>選擇困難小幫手</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha512-z4OUqw38qNLpn1libAN9BsoDx6nbNFio5lA6CuTp9NlK83b89hgyCVq+N5FdBJptINztxn1Z3SaKSKUS5UP60Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js" integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous"></script>
+
+</head>
+
+<style>
+    html{width: 100%;height: 100%;}
+    body{
+        width: 100%;
+        min-height: 100%;
+        background: linear-gradient(347deg,  rgb(37 63 161 / 80%) 0%,rgb(245 66 66 / 40%) 100%)
+
+    }
+ 
+    .s-move {
+        top: 80%;
+    }
+
+    .g-name {
+        display: block;
+        position: absolute;
+        font-size: 1.8em;
+        transition: .2s all;
+        color: #fff;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        top: 50%;
+        transition: .1s all;
+    }
+
+    .background_anime {
+        z-index: 100;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100vh;
+        display: none;
+        background-color: #00000070;
+    }
+
+    .modal_anime {
+        position: relative;
+        width: 500px;
+        z-index: 999;
+        height: 500px;
+        color: white;
+
+        left: calc(50% - 250px);
+        top: -50%;
+    }
+
+
+    .anime {
+        box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+
+        z-index: 999;
+        display: none;
+        position: absolute;
+        overflow: hidden;
+
+        width: 80%;
+        height: 80%;
+        color: white;
+        background: #282828;
+        left: 10%;
+        top: 0;
+
+
+        border-radius: 30%;
+        background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+
+        background-size: 400% 400%;
+        animation: Gradient 10s ease infinite;
+
+    }
+
+    /* .anime:hover {
+
+
+
+transform: rotate(3deg);
+
+
+
+} */
+    .return {
+
+        z-index: 1000;
+        display: none;
+
+        position: absolute;
+
+        left:  50%;
+        bottom: 2%;
+        transform: translate(-50%, -50%);
+        border-radius: 10px;
+  border: 1px solid  #FFFFFF;
+
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: transform 80ms ease-in;
+  background-color: transparent;
+
+
+ 
+    }
+    .return:hover{
+        background-color: transparent;  border: 2px solid  #FFFFFF;
+    
+ }
+    .anime_title{font-size: 2em;position:absolute;top:8%;left:50%;transform: translate(-50%, -50%);font-weight:1000; z-index:1000 ;display:none;}
+
+    @keyframes Gradient {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+    @media only screen and (max-width:400px) {
+
+.modal_anime{width:300px ;height:300px ;left:50%;transform: translate(-50%, -50%);}
+}
+
+
+
+
+</style>
+
+<body>
+    <main>
+        <div style="position:relative">
+            <div class="background_anime">
+                <div class="modal_anime">
+                    
+                    <div class="anime">
+                        <div class="anime_title" >命中注定!</div>
+
+
+                        <div class="g-name"></div>
+
+
+
+                    </div>
+                    <div class="return btn btn-outline-primary ">返回</div>
+                </div>
+
+            </div>
+            <div class="container-xl d-flex justify-content-center py-5">
+                <div style="padding: 2%;box-shadow: 3px 1px 20px 1px rgb(124 124 124 / 34%);background:white;border-radius:30px;max-height:80vh;overflow:auto">
+                    <h1 ><strong>選擇困難小幫手</strong></h1>
+                    <small style="color: gray;">開發者:楊育惠</small>
+
+                    <p>讓程式幫你做出選擇，請勿一直重新選擇，尚未做限制，請克制點! QAQ</p>
+                    <div class="d-flex justify-content-between my-2">
+                        <button onclick="addinput()" class="btn btn-outline-dark">增加輸入</button>
+                    </div>
+                    <form name="contact-form" method="" id="form1">
+
+                        <div class="row mt-5 " id="1">
+
+
+
+                            <div class="col-lg-9 col-md-8 col-8">
+                                <input placeholder="輸入項目" type="text" id="item1" name="item[]" value="" autocomplete="off" class=" form-control" required />
+                                <label for="item1"> </label>
+                            </div>
+
+
+                            <div class="col-lg-3 col-md-4 col-4">
+                                <div id="del" class="btn  btn-danger btn-sm float-end " onclick="deleteinput(1)">禁止刪除</div>
+                            </div>
+                        </div>
+                        <button  type="button" class="submit btn btn-outline-primary float-end" >Start</button>
+
+                        <!-- <button type="submit" class="btn btn-outline-primary  float-end" id="form1" >送出囉</button> -->
+                    </form>
+
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+</body>
+
+<script>
+    var i = 1;
+
+    function addinput() {
+
+        var d1 = document.getElementById(i);
+        //console.log(d1);
+        if (d1 == null) {
+            i = 1;
+            var d1 = document.getElementById(i);
+            i += 1;
+            d = 0;
+            d1.insertAdjacentHTML('afterend', '<div class="row mt-1  " id="' + i + '" > <div class="col-lg-9 col-md-8 col-8"><input type="text" placeholder="輸入項目" id="item' + i + '"  name="item[]" value="" class=" form-control" autocomplete="off" required/> <label for="item' + i + '" > </label></div> <div class="col-lg-3 col-md-4 col-4"><div   class="btn btn-outline-danger btn-sm float-end" onclick="deleteinput(' + i + ')" >刪除清單</div></div> ');
+        } else {
+            console.log('在i後面新增元素' + i);
+            i += 1;
+            d1.insertAdjacentHTML('afterend', '<div class="row mt-1  " id="' + i + '" > <div class="col-lg-9 col-md-8 col-8"><input type="text" placeholder="輸入項目" id="item' + i + '"  name="item[]" value="" class=" form-control" autocomplete="off" required /> <label for="item' + i + '" > </label></div> <div class="col-lg-3 col-md-4 col-4"><div   class="btn btn-outline-danger btn-sm float-end" onclick="deleteinput(' + i + ')" >刪除清單</div></div> ');
+            console.log('新增元素' + i);
+        };
+    }
+
+    var d = 0;
+
+    function deleteinput(a) {
+        if (a == 1) {
+            alert("就說了禁止刪除，你還點???")
+            return
+        }
+
+        console.log('刪除' + a);
+        var example = document.getElementById(a + '');
+        example.parentNode.removeChild(example);
+        d += 1;
+        console.log('刪除次數' + d);
+        console.log('目前i為多少' + i);
+        if (i > a) {
+
+        } else {
+            i -= 1;
+            console.log('目前i為多少' + i);
+        }
+        if (i == d) {
+            i = 1;
+            d = 0;
+            console.log('目前i,d為多少' + i + '...' + d);
+
+        }
+
+
+    };
+
+    
+    $(document).ready(function() {
+        
+        
+        
+        $(".return").click(function() {
+
+            $(".modal_anime").animate({
+
+
+                top: '-50%'
+            }, "fast");
+            setTimeout(function() {
+                $(".background_anime").css({
+                    display: 'none',
+
+
+                })
+                $(".anime").css({
+                    display: 'none',
+
+
+                });
+                $(".modal_anime").css({
+                    display: 'none',
+
+
+                });
+            }, 500);
+            $(".return").css({
+                    display: 'none',
+
+
+                });
+                $(".anime_title").css({
+                    display: 'none',
+
+
+                });
+                
+               
+                
+         
+
+
+        });
+        var check = null;
+        $(".submit").click(function() {
+            let nameArr = [];
+        const itemL = document.getElementsByName('item[]');
+        itemL.forEach(function(item, index, array) {
+            nameArr.push(item.value);
+            if ( item.value=='' ||  item.value==null ) {
+                check = false;
+               
+            }else{
+                 check = true;
+            }
+        });
+        if ( check== true) {
+
+
+            $(".background_anime").css({
+                display: 'block',
+
+
+            });
+            $(".anime").css({
+                display: 'block'
+            });
+            $(".modal_anime").css({
+                display: 'block'
+            });
+
+            // var bouncingBall = anime({
+            //     targets: '.anime',
+            //     translateY: '250',
+            //     duration: 500,
+            //     loop:true
+
+
+
+
+            //     //new code
+            //     // scaleX: {
+            //     //     value: 1.05, //代表缩放的值
+            //     //     duration: 150, // 运行时间
+            //     //     delay: 268 //延迟多久执行
+            //     // }
+            // });
+
+            $(".modal_anime").animate({
+              
+
+                top: '-40%'
+            }, "slow");
+
+            $(".modal_anime").animate({
+
+
+                top: '-50%'
+            }, "slow");
+
+            $(".modal_anime").animate({
+
+
+                top: '-30%'
+            }, "slow");
+            $(".modal_anime").animate({
+
+
+                top: '-40%'
+            }, "slow");
+            $(".modal_anime").animate({
+
+
+                top: '20%'
+            }, "slow");
+
+
+            $(".modal_anime").animate({
+                top: '-=100px'
+
+            }, "fast");
+            $(".modal_anime").animate({
+                top: '+=100px'
+
+            }, "fast");
+            $(".modal_anime").animate({
+                top: '-=40px'
+
+            }, "fast");
+            $(".modal_anime").animate({
+                top: '+=40px'
+
+            }, "fast");
+
+
+
+            setTimeout(function() {
+                $(".return").css({
+                    display: 'block',
+
+                })
+                $(".anime_title").css({
+                    display: 'block',
+
+
+                });
+            }, 3000);
+
+            anime({
+                targets: '.anime',
+                rotate: {
+                    value: '+=2turn', // 0 + 2 = '2turn'
+                    duration: 2500,
+                    easing: 'easeInOutSine'
+                },
+                delay: 1000
+            });
+
+            setTimeout(function() {
+                 var tl = anime.timeline({
+                    targets: '.anime',
+                    duration: 800,
+                    
+                   
+
+
+
+
+                    loop: 10 // Is not inherited
+                });
+
+                tl.add({
+                    rotateZ: {
+                        value: [0, 5],
+                        duration: 200,
+                    },
+                    //  scale:{ value:  [1,1.01],duration: 200,},
+                    // override the easing parameter
+                    easing: 'spring',
+
+                })
+                tl.add({
+                    rotateZ: {
+                        value: [5, -5],
+                        duration: 400,
+                    },
+                    // scale: { value:[1.01,1],duration: 200,},
+                    // override the easing parameter
+                    easing: 'spring',
+
+
+
+                })
+                
+                tl.add({
+                    rotateZ: {
+                        value: [-5, 0],
+                        duration: 200,
+                    },
+                    // scale: { value:[1.01,1],duration: 200,},
+                    // override the easing parameter
+                    easing: 'spring',
+
+
+
+                })
+               
+                
+                
+
+
+
+
+
+
+            }, 3500);}
+            else{ 
+                alert("項目不為空");}
+
+
+
+
+
+
+        });
+    });
+
+
+    let $start = $('.submit');
+    let $randomName = $('.g-name');
+
+    let timeout = null;
+
+    $(document).on('click', '.submit', e => {
+        let nameArr = [];
+        const itemL = document.getElementsByName('item[]');
+        itemL.forEach(function(item, index, array) {
+            nameArr.push(item.value);
+            if ( item.value=='' ||  item.value==null ) {
+                return
+            }
+        });
+
+
+
+        let nameArrLength = nameArr.length;
+        if ($start.text() !== 'Start') {
+            // $start.text('Start').removeClass('s-move');
+            $start.text('Start');
+
+            // $randomName.hide();
+
+            clearInterval(timeout);
+
+            for (let i = 1; i <= 19; i++) {
+                (function(j) {
+                    setTimeout(() => {
+                        let random = parseInt(Math.random() * nameArrLength);
+                        let randomName = nameArr[random];
+                        $randomName.text(randomName);
+                    }, j * j * 15);
+                })(i);
+            }
+
+
+        } else {
+
+
+           
+
+
+            $randomName.show();
+
+            timeout = setInterval(() => {
+                let random = parseInt(Math.random() * nameArrLength);
+                let randomName = nameArr[random];
+
+                $randomName.text(randomName);
+            }, 10);
+            clearInterval(timeout);
+
+            for (let i = 1; i <= 19; i++) {
+                (function(j) {
+                    setTimeout(() => {
+                        let random = parseInt(Math.random() * nameArrLength);
+                        let randomName = nameArr[random];
+                        $randomName.text(randomName);
+                    }, j * j * 10);
+                })(i);
+            }
+
+
+            // $start.text('Stop').addClass('s-move');
+        }
+    });
+</script>
+</script>
+
+</html>
